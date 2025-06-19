@@ -1,4 +1,5 @@
 // Custom Components
+import { Tag } from "antd";
 import AntTable from "./../custom/AntTable";
 
 export default function BooksList({ books, isLoading, formData, ...props }) {
@@ -37,6 +38,9 @@ export default function BooksList({ books, isLoading, formData, ...props }) {
       title: "Mevcut",
       dataIndex: "is_available",
       key: "is_available",
+      render: (text) => (
+        <Tag color={text ? "green" : "red"}>{text ? "Evet" : "Hayır"}</Tag>
+      ),
     },
   ];
 

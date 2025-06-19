@@ -69,6 +69,8 @@ export default function Books() {
             <BooksList
               books={booksData}
               isLoading={isLoadingBooks}
+              createdTimeStamp={false}
+              updatedTimeStamp={false}
               editAction={(record) => {
                 bookForm.setFieldsValue({
                   title: record.title,
