@@ -31,9 +31,6 @@ export default function AuthorsForm({
         form={form}
         name="authorsForm"
         onFinish={(values) => {
-          console.log("Form Values:", values);
-          console.log("Selected Author:", selectedAuthor);
-
           selectedAuthor.id == null
             ? createAuthor(values, {
                 onSuccess: () => {
