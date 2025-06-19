@@ -2,32 +2,55 @@ import { Drawer, Form, Input } from "antd";
 
 // Hooks
 import { useCreateAuthor } from "./../../hooks/authors/useCreateAuthor";
+import { useUpdateAuthor } from "./../../hooks/authors/useUpdateAuthor";
 
 // Custom Components
 import AntForm from "./../custom/AntForm";
 
-export default function AuthorsForm({ form, open, setOpen }) {
+export default function AuthorsForm({
+  form,
+  open,
+  setOpen,
+  selectedAuthor,
+  setSelectedAuthor,
+}) {
   // Hooks
   const { mutate: createAuthor, isPending } = useCreateAuthor();
+  const { mutate: updateAuthor } = useUpdateAuthor();
+
+  // Reset
+  const resetHandle = () => {
+    setOpen(false);
+    setSelectedAuthor({});
+    form.resetFields();
+  };
 
   return (
-    <Drawer
-      open={open}
-      onClose={() => {
-        setOpen(false);
-
-        form.resetFields();
-      }}
-    >
+    <Drawer open={open} onClose={resetHandle}>
       <AntForm
         form={form}
         name="authorsForm"
         onFinish={(values) => {
-          createAuthor(values, {
-            onSuccess: () => {
-              form.resetFields();
-            },
-          });
+          console.log("Form Values:", values);
+          console.log("Selected Author:", selectedAuthor);
+
+          selectedAuthor.id == null
+            ? createAuthor(values, {
+                onSuccess: () => {
+                  resetHandle();
+                },
+              })
+            : updateAuthor(
+                {
+                  id: selectedAuthor.id,
+                  authorData: values,
+                },
+                {
+                  onSuccess: () => {
+                    resetHandle();
+                  },
+                }
+              );
         }}
         isPending={isPending}
       >

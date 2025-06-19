@@ -1,5 +1,5 @@
 // Ant Design
-import { Button, Table, Tag } from "antd";
+import { Button, Popconfirm, Table, Tag } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // Moment
@@ -54,16 +54,21 @@ export default function AntTable({
           >
             <EditOutlined />
           </Button>
-          <Button
-            color="red"
-            variant="solid"
-            size="small"
-            onClick={() => {
-              deleteAction(record);
-            }}
+
+          <Popconfirm
+            title="Bu kaydı silmek istediğinize emin misiniz?"
+            onConfirm={() => deleteAction(record)}
+            okText="Evet"
+            cancelText="Hayır"
+            placement="left"
+            okButtonProps={{ danger: true }}
+            cancelButtonProps={{ type: "default" }}
+            icon={<DeleteOutlined style={{ color: "red" }} />}
           >
-            <DeleteOutlined />
-          </Button>
+            <Button color="red" variant="solid" size="small">
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
         </div>
       ),
     },

@@ -5,6 +5,7 @@ import { Form, Button, Card, Skeleton } from "antd";
 
 // Hooks
 import { useAuthors } from "./../hooks/authors/useAuthors";
+import { useDeleteAuthor } from "./../hooks/authors/useDeleteAuthor";
 
 // Components
 import AuthorsList from "./../components/authors/List";
@@ -16,6 +17,7 @@ export default function Authors() {
   // States
   const [visibleForm, setVisibleForm] = useState(false);
   const [formData, setFormData] = useState({});
+  const [selectedAuthor, setSelectedAuthor] = useState({});
 
   // Hooks
   const {
@@ -23,6 +25,7 @@ export default function Authors() {
     isLoading: isLoadingAuthors,
     error: authorsError,
   } = useAuthors();
+  const { mutate: deleteAuthor } = useDeleteAuthor();
 
   // Error handling
   if (authorsError) {
@@ -65,9 +68,12 @@ export default function Authors() {
                   email: record.email,
                 });
 
+                setSelectedAuthor(record);
                 setVisibleForm(true);
               }}
-              deleteAction={(record) => {}}
+              deleteAction={(record) => {
+                deleteAuthor(record.id);
+              }}
             />
           </Card>
         </Skeleton>
@@ -80,6 +86,8 @@ export default function Authors() {
         setOpen={setVisibleForm}
         formData={formData}
         setFormData={setFormData}
+        selectedAuthor={selectedAuthor}
+        setSelectedAuthor={setSelectedAuthor}
       />
     </>
   );
