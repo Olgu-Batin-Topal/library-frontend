@@ -80,6 +80,7 @@ export default function AntTable({
       columns={enhancedColumns.filter((col) => col.enabled !== false)}
       dataSource={dataSource}
       pagination={false}
+      scroll={{ x: true }}
       {...props}
     />
   );
