@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 // Components
 import Loading from "./components/common/Loading.jsx";
+import Layout from "./components/common/Layout.jsx";
 
 // Pages
 const Authors = lazy(() => import("./pages/Authors.jsx"));
@@ -15,9 +16,30 @@ export default function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path="/" element={<Books />} />
-        <Route path="/authors" element={<Authors />} />
-        <Route path="/categories" element={<Categories />} />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Books />
+            </Layout>
+          }
+        />
+        <Route
+          path="/authors"
+          element={
+            <Layout>
+              <Authors />
+            </Layout>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <Layout>
+              <Categories />
+            </Layout>
+          }
+        />
       </Routes>
     </Suspense>
   );
