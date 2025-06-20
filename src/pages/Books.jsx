@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Ant Design
-import { Form, Button, Card, Skeleton, Pagination } from "antd";
+import { Form, Button, Card, Skeleton, Pagination, Input } from "antd";
 
 // Moment
 import moment from "./../helpers/moment";
@@ -24,6 +24,7 @@ export default function Books() {
   const [formData, setFormData] = useState({});
   const [selectedBook, setSelectedBook] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Hooks
   const { data: authorsData } = useAuthors();
@@ -33,14 +34,14 @@ export default function Books() {
     isLoading: isLoadingBooks,
     refetch: booksRefetch,
     error: booksError,
-  } = useBooks(currentPage);
+  } = useBooks({ search: searchQuery, page: currentPage });
   const { mutate: deleteBook } = useDeleteBook();
 
   useEffect(() => {
-    if (currentPage) {
+    if (currentPage || searchQuery) {
       booksRefetch();
     }
-  }, [currentPage]);
+  }, [currentPage, searchQuery]);
 
   // Error handling
   if (booksError) {
@@ -63,7 +64,15 @@ export default function Books() {
                 Kitaplarınızı buradan yönetebilirsiniz.
               </p>
 
-              <div>
+              <div className="flex items-center gap-2">
+                <Input.Search
+                  placeholder="Kitap ara..."
+                  allowClear
+                  onSearch={(value) => {
+                    setSearchQuery(value);
+                  }}
+                />
+
                 <Button
                   color="orange"
                   variant="solid"
