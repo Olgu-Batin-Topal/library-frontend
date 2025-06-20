@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Ant Design
-import { Form, Button, Card, Skeleton } from "antd";
+import { Form, Button, Card, Skeleton, Pagination } from "antd";
 
 // Moment
 import moment from "./../helpers/moment";
@@ -23,6 +23,7 @@ export default function Books() {
   const [visibleForm, setVisibleForm] = useState(false);
   const [formData, setFormData] = useState({});
   const [selectedBook, setSelectedBook] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Hooks
   const { data: authorsData } = useAuthors();
@@ -30,9 +31,16 @@ export default function Books() {
   const {
     data: booksData,
     isLoading: isLoadingBooks,
+    refetch: booksRefetch,
     error: booksError,
-  } = useBooks();
+  } = useBooks(currentPage);
   const { mutate: deleteBook } = useDeleteBook();
+
+  useEffect(() => {
+    if (currentPage) {
+      booksRefetch();
+    }
+  }, [currentPage]);
 
   // Error handling
   if (booksError) {
@@ -67,7 +75,8 @@ export default function Books() {
             </div>
 
             <BooksList
-              books={booksData}
+              className="mb-4"
+              books={booksData?.data}
               isLoading={isLoadingBooks}
               createdTimeStamp={false}
               updatedTimeStamp={false}
@@ -86,6 +95,17 @@ export default function Books() {
               }}
               deleteAction={(record) => {
                 deleteBook(record.id);
+              }}
+            />
+
+            <Pagination
+              total={booksData?.pagination?.total_items || 0}
+              defaultPageSize={booksData?.pagination?.per_page || 10}
+              defaultCurrent={currentPage}
+              showTotal={(total) => `Toplam ${total} kitap`}
+              showSizeChanger={false}
+              onChange={(page, pageSize) => {
+                setCurrentPage(page);
               }}
             />
           </Card>

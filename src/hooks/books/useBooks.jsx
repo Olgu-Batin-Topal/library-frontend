@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import API from "./../../services/api";
 
-export const useBooks = () => {
+export const useBooks = (page = 1) => {
   return useQuery({
-    queryKey: ["books"],
+    queryKey: ["books", page],
+    refetchOnWindowFocus: false,
     queryFn: async () => {
-      const res = await API.get("/books");
-      return res.data?.data ?? [];
+      const res = await API.get(`/books?page=${page}`);
+      return res.data ?? [];
     },
   });
 };
