@@ -21,6 +21,7 @@ export default function Authors() {
   const [visibleForm, setVisibleForm] = useState(false);
   const [formData, setFormData] = useState({});
   const [selectedAuthor, setSelectedAuthor] = useState({});
+  const [visibleBooks, setVisibleBooks] = useState(false);
 
   // Hooks
   const {
@@ -86,7 +87,7 @@ export default function Authors() {
                     size="small"
                     onClick={() => {
                       setSelectedAuthor(record);
-                      console.log("Selected Author:", record);
+                      setVisibleBooks(true);
                     }}
                   >
                     <BookOutlined />
@@ -114,8 +115,8 @@ export default function Authors() {
         width={"70%"}
         centered
         title={`${selectedAuthor.name} Kitapları`}
-        open={!!selectedAuthor.id}
-        onCancel={() => setSelectedAuthor({})}
+        open={visibleBooks}
+        onCancel={() => setVisibleBooks(false)}
         footer={null}
       >
         <Skeleton loading={!authorBooksData} active>
