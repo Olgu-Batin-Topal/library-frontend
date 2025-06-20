@@ -1,12 +1,34 @@
-# React + Vite
+## Projeyi Çalıştırma ve Yayınlama Talimatları
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu proje **React19 + Vite** ile geliştirilmiştir. Aşağıdaki adımları takip ederek projeyi yerel ortamda çalıştırabilir veya dağıtıma hazır hale getirebilirsiniz.
 
-Currently, two official plugins are available:
+### Geliştirme Ortamında Çalıştırma
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Gerekli paketleri yükleyin:
 
-## Expanding the ESLint configuration
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Geliştirme sunucusunu başlatın:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Tarayıcınızdan aşağıdaki adrese giderek projeyi görüntüleyebilirsiniz:
+   ```
+   http://localhost:5173
+   ```
+
+### Projeyi Yayınlam
+
+1. Projeyi derleyin:
+
+   ```bash
+   npm run build
+   ```
+
+2. Derlenen dosyalar `dist` klasöründe bulunacaktır. Bu klasörün içerisindekileri bir web sunucusuna yükleyerek projeyi yayınlayabilirsiniz.
+
+3. Dosyaların doğru bir şekilde sunulabilmesi için, tüm yönergelerin `index.html` dosyasına yönlendirilmesi gerektiğini unutmayın. Bunun için .htaccess yapılandırma dosyası veya sunucu yapılandırması kullanabilirsiniz.
