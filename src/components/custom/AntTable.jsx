@@ -13,6 +13,7 @@ export default function AntTable({
   updatedTimeStamp = true,
   editAction = () => {},
   deleteAction = () => {},
+  extraButtons = null,
   ...props
 }) {
   const enhancedColumns = [
@@ -44,6 +45,10 @@ export default function AntTable({
       key: "actions",
       render: (text, record) => (
         <div className="flex items-center gap-1">
+          {extraButtons && typeof extraButtons === "function"
+            ? extraButtons(record)
+            : extraButtons}
+
           <Button
             color="blue"
             variant="solid"

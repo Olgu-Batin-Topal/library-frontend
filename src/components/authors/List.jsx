@@ -5,6 +5,7 @@ export default function AuthorsList({
   authors,
   isLoading,
   formData,
+  extraButtons = null,
   ...props
 }) {
   const columns = [
@@ -27,6 +28,7 @@ export default function AuthorsList({
       dataSource={authors}
       loading={isLoading}
       pagination={false}
+      extraButtons={extraButtons}
       {...props}
     />
   );

@@ -2,7 +2,13 @@
 import { Tag } from "antd";
 import AntTable from "./../custom/AntTable";
 
-export default function BooksList({ books, isLoading, formData, ...props }) {
+export default function BooksList({
+  books,
+  isLoading,
+  formData,
+  authorVisible = true,
+  ...props
+}) {
   const columns = [
     {
       title: "Kitap Adı",
@@ -13,6 +19,7 @@ export default function BooksList({ books, isLoading, formData, ...props }) {
       title: "Yazar",
       dataIndex: "author_name",
       key: "author_name",
+      enabled: authorVisible,
     },
     {
       title: "Kategori",
