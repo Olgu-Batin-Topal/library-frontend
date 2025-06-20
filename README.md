@@ -10,13 +10,21 @@ Bu proje **React19 + Vite** ile geliştirilmiştir. Aşağıdaki adımları taki
    npm install
    ```
 
-2. Geliştirme sunucusunu başlatın:
+2. Ortam değişkenlerini ayarlayın. Proje kök dizininde `.env` dosyası oluşturun ve gerekli değişkenleri ekleyin. Örnek bir `.env` dosyası şu şekilde olabilir:
+
+   ```plaintext
+   VITE_API_URL=http://localhost:3000/api
+   ```
+
+   Bu, API isteklerinin yönlendirileceği URL'yi belirler.
+
+3. Geliştirme sunucusunu başlatın:
 
    ```bash
    npm run dev
    ```
 
-3. Tarayıcınızdan aşağıdaki adrese giderek projeyi görüntüleyebilirsiniz:
+4. Tarayıcınızdan aşağıdaki adrese giderek projeyi görüntüleyebilirsiniz:
    ```
    http://localhost:5173
    ```
