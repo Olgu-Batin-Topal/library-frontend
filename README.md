@@ -21,7 +21,7 @@ Bu proje **React19 + Vite** ile geliştirilmiştir. Aşağıdaki adımları taki
    http://localhost:5173
    ```
 
-### Projeyi Yayınlam
+### Projeyi Yayınlama
 
 1. Projeyi derleyin:
 
