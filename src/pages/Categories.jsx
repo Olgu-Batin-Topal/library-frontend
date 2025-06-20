@@ -47,6 +47,7 @@ export default function Categories() {
   useEffect(() => {
     if (!localStorage.getItem("categories-tour")) {
       setVisibleTour(true);
+      setVisibleForm(false);
       localStorage.setItem("categories-tour", true);
     }
   }, []);

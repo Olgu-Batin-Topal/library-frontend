@@ -75,6 +75,7 @@ export default function Books() {
   useEffect(() => {
     if (!localStorage.getItem("books-tour")) {
       setVisibleTour(true);
+      setVisibleForm(false);
       localStorage.setItem("books-tour", true);
     }
   }, []);

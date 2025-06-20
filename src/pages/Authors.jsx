@@ -49,6 +49,14 @@ export default function Authors() {
     );
   }
 
+  useEffect(() => {
+    if (!localStorage.getItem("authors-tour")) {
+      setVisibleTour(true);
+      setVisibleForm(false);
+      localStorage.setItem("authors-tour", true);
+    }
+  }, []);
+
   return (
     <>
       <div className="container mx-auto">
