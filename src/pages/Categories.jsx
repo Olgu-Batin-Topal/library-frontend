@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Ant Design
-import { Form, Button, Card, Skeleton } from "antd";
+import { Form, Button, Card, Skeleton, Tour } from "antd";
+
+// React Router
+import { useLocation } from "react-router-dom";
 
 // Hooks
 import { useCategories } from "./../hooks/categories/useCategories";
@@ -15,7 +18,10 @@ export default function Categories() {
   const [categoryForm] = Form.useForm();
 
   // States
-  const [visibleForm, setVisibleForm] = useState(false);
+  const [visibleTour, setVisibleTour] = useState(false);
+  const [visibleForm, setVisibleForm] = useState(
+    useLocation().state?.visibleForm || false
+  );
   const [formData, setFormData] = useState({});
   const [selectedCategory, setSelectedCategory] = useState({});
 
@@ -38,6 +44,13 @@ export default function Categories() {
     );
   }
 
+  useEffect(() => {
+    if (!localStorage.getItem("categories-tour")) {
+      setVisibleTour(true);
+      localStorage.setItem("categories-tour", true);
+    }
+  }, []);
+
   return (
     <>
       <div className="container mx-auto">
@@ -53,6 +66,7 @@ export default function Categories() {
                   color="orange"
                   variant="solid"
                   onClick={() => setVisibleForm(true)}
+                  data-tour="new-category-button"
                 >
                   Yeni Kategori Ekle
                 </Button>
@@ -88,6 +102,34 @@ export default function Categories() {
         setFormData={setFormData}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+      />
+
+      {/* Tour */}
+      <Tour
+        open={visibleTour}
+        onClose={() => setVisibleTour(false)}
+        disabledInteraction={true}
+        zIndex={9999}
+        steps={[
+          {
+            title: "Kategoriler",
+            description: "Bu sayfada kitap kategorilerinizi yönetebilirsiniz.",
+            target: () => null,
+          },
+          {
+            title: "Yeni Kategori Ekle",
+            description: "Yeni bir kategori eklemek için bu butona tıklayın.",
+            target: () =>
+              document.querySelector('[data-tour="new-category-button"]'),
+          },
+          {
+            title: "Kategori Listesi",
+            description:
+              "Kategorilerinizi burada görüntüleyebilir ve yönetebilirsiniz.",
+            target: () =>
+              document.querySelector(".ant-card-body .ant-table-container"),
+          },
+        ]}
       />
     </>
   );

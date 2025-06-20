@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Ant Design
-import { Form, Button, Card, Skeleton, Modal } from "antd";
+import { Form, Button, Card, Skeleton, Modal, Tour, Tooltip } from "antd";
 import { BookOutlined } from "@ant-design/icons";
+
+// React Router
+import { useLocation } from "react-router-dom";
 
 // Hooks
 import { useAuthors } from "./../hooks/authors/useAuthors";
@@ -18,7 +21,10 @@ export default function Authors() {
   const [authorForm] = Form.useForm();
 
   // States
-  const [visibleForm, setVisibleForm] = useState(false);
+  const [visibleTour, setVisibleTour] = useState(false);
+  const [visibleForm, setVisibleForm] = useState(
+    useLocation().state?.visibleForm || false
+  );
   const [formData, setFormData] = useState({});
   const [selectedAuthor, setSelectedAuthor] = useState({});
   const [visibleBooks, setVisibleBooks] = useState(false);
@@ -58,6 +64,7 @@ export default function Authors() {
                   color="orange"
                   variant="solid"
                   onClick={() => setVisibleForm(true)}
+                  data-tour="new-author-button"
                 >
                   Yeni Yazar Ekle
                 </Button>
@@ -81,17 +88,23 @@ export default function Authors() {
               }}
               extraButtons={(record) => (
                 <>
-                  <Button
-                    color="orange"
-                    variant="solid"
-                    size="small"
-                    onClick={() => {
-                      setSelectedAuthor(record);
-                      setVisibleBooks(true);
-                    }}
+                  <Tooltip
+                    title="Yazarın Kitapları"
+                    placement="top"
+                    arrow={true}
                   >
-                    <BookOutlined />
-                  </Button>
+                    <Button
+                      color="orange"
+                      variant="solid"
+                      size="small"
+                      onClick={() => {
+                        setSelectedAuthor(record);
+                        setVisibleBooks(true);
+                      }}
+                    >
+                      <BookOutlined />
+                    </Button>
+                  </Tooltip>
                 </>
               )}
             />
@@ -133,6 +146,33 @@ export default function Authors() {
           />
         </Skeleton>
       </Modal>
+
+      {/* Tour */}
+      <Tour
+        open={visibleTour}
+        onClose={() => setVisibleTour(false)}
+        disabledInteraction={true}
+        zIndex={9999}
+        steps={[
+          {
+            title: "Yazarlar",
+            description: "Bu sayfada yazarlarınızı yönetebilirsiniz.",
+            target: () => null,
+          },
+          {
+            title: "Yeni Yazar Ekle",
+            description: "Yeni bir yazar eklemek için bu butona tıklayın.",
+            target: () =>
+              document.querySelector('[data-tour="new-author-button"]'),
+          },
+          {
+            title: "Yazar Listesi",
+            description:
+              "Yazarlarınızın listesini buradan görüntüleyebilir, düzenleyebilir veya silebilirsiniz.",
+            target: () => document.querySelector(".ant-card-body"),
+          },
+        ]}
+      />
     </>
   );
 }

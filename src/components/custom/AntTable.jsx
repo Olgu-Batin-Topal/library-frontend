@@ -1,5 +1,5 @@
 // Ant Design
-import { Button, Popconfirm, Table, Tag } from "antd";
+import { Button, Popconfirm, Table, Tag, Tooltip } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // Moment
@@ -49,31 +49,35 @@ export default function AntTable({
             ? extraButtons(record)
             : extraButtons}
 
-          <Button
-            color="blue"
-            variant="solid"
-            size="small"
-            onClick={() => {
-              editAction(record);
-            }}
-          >
-            <EditOutlined />
-          </Button>
-
-          <Popconfirm
-            title="Bu kaydı silmek istediğinize emin misiniz?"
-            onConfirm={() => deleteAction(record)}
-            okText="Evet"
-            cancelText="Hayır"
-            placement="left"
-            okButtonProps={{ danger: true }}
-            cancelButtonProps={{ type: "default" }}
-            icon={<DeleteOutlined style={{ color: "red" }} />}
-          >
-            <Button color="red" variant="solid" size="small">
-              <DeleteOutlined />
+          <Tooltip title="Düzenle" placement="top" arrow={true}>
+            <Button
+              color="blue"
+              variant="solid"
+              size="small"
+              onClick={() => {
+                editAction(record);
+              }}
+            >
+              <EditOutlined />
             </Button>
-          </Popconfirm>
+          </Tooltip>
+
+          <Tooltip title="Sil" placement="top" arrow={true}>
+            <Popconfirm
+              title="Bu kaydı silmek istediğinize emin misiniz?"
+              onConfirm={() => deleteAction(record)}
+              okText="Evet"
+              cancelText="Hayır"
+              placement="left"
+              okButtonProps={{ danger: true }}
+              cancelButtonProps={{ type: "default" }}
+              icon={<DeleteOutlined style={{ color: "red" }} />}
+            >
+              <Button color="red" variant="solid" size="small">
+                <DeleteOutlined />
+              </Button>
+            </Popconfirm>
+          </Tooltip>
         </div>
       ),
     },

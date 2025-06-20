@@ -73,7 +73,7 @@ export default function CategoriesForm({
           label="Açıklama"
           name="description"
           rules={[
-            { required: true, message: "Lütfen açıklama girin!" },
+            // { required: true, message: "Lütfen açıklama girin!" },
             { max: 1000, message: "Açıklama en fazla 500 karakter olabilir!" },
           ]}
         >
